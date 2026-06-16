@@ -221,30 +221,7 @@ const Sidebar = () => {
         border-slate-800
         p-4
         "
-      >
-        <div className="flex items-center gap-3">
-          <div
-            className="
-            h-12
-            w-12
-            rounded-full
-            bg-cyan-600
-            flex
-            items-center
-            justify-center
-            font-semibold
-            "
-          >
-            RS
-          </div>
-
-          <div>
-            <h4 className="font-medium">Robin Saini</h4>
-
-            <p className="text-xs text-slate-400">robin@gmail.com</p>
-          </div>
-        </div>
-      </div>
+      ></div>
     </aside>
   );
 };

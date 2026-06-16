@@ -1,18 +1,18 @@
-import { Menu, Plus, ChevronDown } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Menu } from "lucide-react";
+import UserProfile from "./UserProfile";
 
 const Header = ({ setSidebarOpen }) => {
   return (
     <header
       className="
-        sticky
-        top-0
-        z-30
-        bg-slate-50/90
-        backdrop-blur
-        border-b
-        border-slate-200
-        "
+      sticky
+      top-0
+      z-30
+      bg-slate-50/95
+      backdrop-blur
+      border-b
+      border-slate-200
+      "
     >
       <div
         className="
@@ -22,93 +22,55 @@ const Header = ({ setSidebarOpen }) => {
         py-4
         "
       >
-        <div
-          className="
-          flex
-          flex-col
-          lg:flex-row
-          lg:items-center
-          lg:justify-between
-          gap-4
-          "
-        >
-          {/* Left */}
-          <div className="flex items-center gap-3">
+        <div className="flex items-center justify-between gap-3">
+          {/* Left Side */}
+          <div className="flex items-center gap-3 min-w-0 flex-1">
             <button
+              onClick={() => setSidebarOpen(true)}
               className="
               lg:hidden
-              p-2
+              p-2.5
               rounded-xl
               border
+              border-slate-200
               bg-white
+              shadow-sm
+              shrink-0
               "
-              onClick={() => setSidebarOpen(true)}
             >
               <Menu size={20} />
             </button>
 
-            <div>
+            <div className="min-w-0">
               <h1
                 className="
-                text-2xl
-                md:text-3xl
-                xl:text-4xl
+                text-xl
+                sm:text-2xl
+                lg:text-3xl
                 font-bold
                 text-slate-900
+                truncate
                 "
               >
                 Welcome Back 👋
               </h1>
 
-              <p className="text-slate-500">Track your performance</p>
+              <p
+                className="
+                hidden
+                md:block
+                text-sm
+                text-slate-500
+                "
+              >
+                Track your performance
+              </p>
             </div>
           </div>
 
-          {/* Right */}
-          <div
-            className="
-            flex
-            flex-col
-            sm:flex-row
-            gap-3
-            "
-          >
-            <button
-              className="
-              h-12
-              px-5
-              bg-white
-              border
-              rounded-xl
-              flex
-              items-center
-              justify-center
-              gap-2
-              "
-            >
-              This Month
-              <ChevronDown size={16} />
-            </button>
-
-            <Link
-              to="/add-trade"
-              className="
-                h-12
-                px-6
-                bg-violet-600
-                rounded-xl
-                text-white
-                flex
-                items-center
-                justify-center
-                gap-2
-                hover:bg-violet-700
-                transition
-              "
-            >
-              <Plus size={18} />
-              Add Trade
-            </Link>
+          {/* Right Side */}
+          <div className="shrink-0">
+            <UserProfile />
           </div>
         </div>
       </div>

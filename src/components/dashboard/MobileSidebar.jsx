@@ -26,16 +26,16 @@ const menuItems = [
     label: "Trade History",
     path: "/trade-history",
   },
-  {
-    icon: BarChart3,
-    label: "Analytics",
-    path: "/analytics",
-  },
-  {
-    icon: FileText,
-    label: "Reports",
-    path: "/reports",
-  },
+  // {
+  //   icon: BarChart3,
+  //   label: "Analytics",
+  //   path: "/analytics",
+  // },
+  // {
+  //   icon: FileText,
+  //   label: "Reports",
+  //   path: "/reports",
+  // },
   {
     icon: CalendarDays,
     label: "Calendar",
