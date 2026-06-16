@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const CapitalSetup = () => {
   return (
     <div className="min-h-screen bg-[#020617] text-white">
@@ -133,7 +135,8 @@ const CapitalSetup = () => {
                 </div>
               </div>
 
-              <button
+              <Link
+                to="/dashboard"
                 className="
                   w-full
                   py-4
@@ -142,10 +145,13 @@ const CapitalSetup = () => {
                   from-violet-600
                   to-purple-500
                   font-semibold
+                  flex
+                  items-center
+                  justify-center
                 "
               >
                 Continue
-              </button>
+              </Link>
             </form>
           </div>
         </div>
