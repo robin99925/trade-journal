@@ -96,7 +96,7 @@ const UserProfile = () => {
           </div>
 
           <Link
-            to="/signin"
+            to="/"
             className="
             flex
             items-center
