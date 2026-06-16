@@ -1,4 +1,5 @@
 import { Menu, Plus, ChevronDown } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Header = ({ setSidebarOpen }) => {
   return (
@@ -89,22 +90,25 @@ const Header = ({ setSidebarOpen }) => {
               <ChevronDown size={16} />
             </button>
 
-            <button
+            <Link
+              to="/add-trade"
               className="
-              h-12
-              px-6
-              bg-violet-600
-              rounded-xl
-              text-white
-              flex
-              items-center
-              justify-center
-              gap-2
+                h-12
+                px-6
+                bg-violet-600
+                rounded-xl
+                text-white
+                flex
+                items-center
+                justify-center
+                gap-2
+                hover:bg-violet-700
+                transition
               "
             >
               <Plus size={18} />
               Add Trade
-            </button>
+            </Link>
           </div>
         </div>
       </div>

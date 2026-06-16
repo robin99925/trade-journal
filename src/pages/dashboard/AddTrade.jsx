@@ -10,29 +10,55 @@ const AddTrade = () => {
       <div className="space-y-8">
         {/* ================= HEADER ================= */}
 
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3 sm:gap-4">
+          {/* Icon */}
           <div
             className="
-            w-14
-            h-14
-            rounded-2xl
-            bg-gradient-to-br
-            from-violet-600
-            to-violet-900
-            flex
-            items-center
-            justify-center
-            shadow-lg
-            shadow-violet-500/20
-            "
+      w-12
+      h-12
+      sm:w-14
+      sm:h-14
+      rounded-2xl
+      bg-gradient-to-br
+      from-violet-600
+      to-violet-900
+      flex
+      items-center
+      justify-center
+      shadow-lg
+      shadow-violet-500/20
+      shrink-0
+    "
           >
-            <LineChart size={26} className="text-white" />
+            <LineChart className="text-white w-5 h-5 sm:w-[26px] sm:h-[26px]" />
           </div>
 
-          <div>
-            <h1 className="text-4xl font-bold text-white">Add Trade</h1>
+          {/* Title */}
+          <div className="min-w-0">
+            <h1
+              className="
+        text-2xl
+        sm:text-3xl
+        lg:text-4xl
+        font-bold
+        text-white
+        leading-tight
+        break-words
+      "
+            >
+              Add Trade
+            </h1>
 
-            <p className="text-slate-400 mt-1">Record your trade details</p>
+            <p
+              className="
+        mt-1
+        text-sm
+        sm:text-base
+        text-slate-400
+      "
+            >
+              Record your trade details
+            </p>
           </div>
         </div>
 
