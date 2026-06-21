@@ -1,5 +1,6 @@
 import { postApi, getApi } from "../utils/apiMethods";
-let url = "http://localhost:5000/api/v1";
+let url =
+  "https://trade-journal-backend-git-main-robins-projects-73580735.vercel.app/api/v1";
 
 export const createTrade = (payload) => {
   return postApi(`${url}/trades`, payload, true);

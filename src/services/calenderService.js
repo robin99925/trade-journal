@@ -1,6 +1,7 @@
 import { getApi } from "../utils/apiMethods";
 
-const BASE_URL = "http://localhost:5000/api/v1";
+const BASE_URL =
+  "https://trade-journal-backend-git-main-robins-projects-73580735.vercel.app/api/v1";
 
 // month = 1 to 12
 // year = 2026
