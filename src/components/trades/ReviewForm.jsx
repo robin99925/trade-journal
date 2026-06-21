@@ -66,24 +66,6 @@ const ReviewForm = ({ review, setReview, prevStep, handleSubmit, loading }) => {
         </div>
       </div>
 
-      {/* Textareas */}
-
-      <ReviewTextarea
-        title="What went well in this trade?"
-        subtitle="Identify what worked well."
-        value={review.wentWell}
-        placeholder="Write what went well..."
-        onChange={(value) => updateField("wentWell", value)}
-      />
-
-      <ReviewTextarea
-        title="What could have been improved?"
-        subtitle="Be honest and find areas to improve."
-        value={review.improvement}
-        placeholder="Write what could have been improved..."
-        onChange={(value) => updateField("improvement", value)}
-      />
-
       <ReviewTextarea
         title="Key learning from this trade"
         subtitle="What is the main takeaway from this trade?"
@@ -91,16 +73,6 @@ const ReviewForm = ({ review, setReview, prevStep, handleSubmit, loading }) => {
         placeholder="What did you learn from this trade..."
         onChange={(value) => updateField("learning", value)}
       />
-
-      <ReviewTextarea
-        title="Additional notes (Optional)"
-        subtitle="Any other notes or observations."
-        value={review.notes}
-        placeholder="Write additional notes..."
-        onChange={(value) => updateField("notes", value)}
-      />
-
-      {/* Buttons */}
 
       <div className="flex justify-between mt-8">
         <button onClick={prevStep} className="h-12 px-8 border rounded-xl">

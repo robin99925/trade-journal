@@ -4,6 +4,8 @@ const setups = ["Breakout", "Pullback", "Reversal", "Trend Following"];
 
 const timeframes = [
   "1 Minute",
+  "2 Minute",
+  "3 Minute",
   "5 Minutes",
   "15 Minutes",
   "30 Minutes",
@@ -121,63 +123,6 @@ const StrategyForm = ({ strategy, setStrategy, nextStep, prevStep }) => {
         </div>
       </div>
 
-      {/* Plans */}
-
-      <div className="mb-8">
-        <label className="font-semibold block mb-1">Trading Plan</label>
-
-        <p className="text-sm text-slate-500 mb-4">Choose all that apply</p>
-
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-3">
-          {tradePlans.map((plan) => (
-            <button
-              type="button"
-              key={plan}
-              onClick={() => togglePlan(plan)}
-              className={`h-12 rounded-xl border text-sm font-medium transition
-              ${
-                strategy.plans.includes(plan)
-                  ? "border-violet-500 bg-violet-50 text-violet-600"
-                  : "border-gray-200"
-              }`}
-            >
-              {plan}
-            </button>
-          ))}
-        </div>
-      </div>
-
-      {/* Reason */}
-
-      <div className="mb-8">
-        <label className="font-semibold block mb-1">Trade Reason</label>
-
-        <select
-          value={strategy.reason}
-          onChange={(e) =>
-            setStrategy({
-              ...strategy,
-              reason: e.target.value,
-            })
-          }
-          className="w-full h-12 border rounded-xl px-4"
-        >
-          <option value="">Select Reason</option>
-
-          <option value="Strong breakout above resistance with high volume">
-            Strong breakout above resistance with high volume
-          </option>
-
-          <option value="Trend continuation after pullback">
-            Trend continuation after pullback
-          </option>
-
-          <option value="Reversal at key support zone">
-            Reversal at key support zone
-          </option>
-        </select>
-      </div>
-
       {/* Entry Type */}
 
       <div className="mb-8">
@@ -222,6 +167,7 @@ const StrategyForm = ({ strategy, setStrategy, nextStep, prevStep }) => {
               expectedOutcome: e.target.value,
             })
           }
+          placeholder="Enter your strategy's expected outcome..."
           className="w-full border rounded-xl p-4 resize-none"
         />
 
