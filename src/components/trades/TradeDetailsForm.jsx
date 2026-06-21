@@ -141,7 +141,7 @@ const TradeDetailsForm = ({ trade, setTrade, nextStep }) => {
               }`}
             >
               <TrendingDown size={20} />
-              Put
+              Short
             </button>
           </div>
         </div>
