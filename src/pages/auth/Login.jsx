@@ -150,8 +150,9 @@ export default function Login() {
 
               <div className="flex justify-end">
                 <Link
-                  to="/forgot-password"
+                  // to="/forgot-password"
                   className="text-sm text-violet-400 hover:text-violet-300"
+                  onClick={() => alert("work in progress")}
                 >
                   Forgot Password?
                 </Link>
