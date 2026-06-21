@@ -1,6 +1,81 @@
-import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import { completeOnboarding } from "../../services/capitalService";
 
 const CapitalSetup = () => {
+  const navigate = useNavigate();
+
+  const [loading, setLoading] = useState(false);
+
+  const [amount, setAmount] = useState("");
+
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    console.log("User from localStorage:", user);
+
+    if (user?.onboardingCompleted) {
+      navigate("/dashboard", { replace: true });
+    }
+  }, [navigate]);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!amount) {
+      return Swal.fire({
+        icon: "warning",
+        title: "Please enter starting capital",
+      });
+    }
+
+    try {
+      setLoading(true);
+
+      const response = await completeOnboarding({
+        amount,
+      });
+
+      await Swal.fire({
+        icon: "success",
+        title: response.message || "Onboarding Completed Successfully",
+        timer: 1200,
+        showConfirmButton: false,
+      });
+      const user = JSON.parse(localStorage.getItem("user"));
+
+      if (user) {
+        localStorage.setItem(
+          "user",
+          JSON.stringify({
+            ...user,
+            onboardingCompleted: true,
+          }),
+        );
+      }
+
+      navigate("/dashboard");
+    } catch (error) {
+      const errorData = error?.response?.data;
+
+      let errorMessage = "Something went wrong";
+
+      if (errorData?.errors?.length > 0) {
+        errorMessage = errorData.errors.map((err) => err.msg).join("<br/>");
+      } else if (errorData?.message) {
+        errorMessage = errorData.message;
+      }
+
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        html: errorMessage,
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-[#020617] text-white">
       <div className="mx-auto max-w-[1600px] min-h-screen grid md:grid-cols-2">
@@ -31,7 +106,7 @@ const CapitalSetup = () => {
               Let's set up your trading account.
             </p>
 
-            <form className="mt-8 space-y-6">
+            <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
               {/* Capital */}
               <div>
                 <label className="block mb-2 text-sm text-slate-300">
@@ -40,6 +115,8 @@ const CapitalSetup = () => {
 
                 <input
                   type="number"
+                  value={amount}
+                  onChange={(e) => setAmount(e.target.value)}
                   placeholder="100000"
                   className="
                     w-full
@@ -135,8 +212,9 @@ const CapitalSetup = () => {
                 </div>
               </div>
 
-              <Link
-                to="/dashboard"
+              <button
+                type="submit"
+                disabled={loading}
                 className="
                   w-full
                   py-4
@@ -148,10 +226,11 @@ const CapitalSetup = () => {
                   flex
                   items-center
                   justify-center
+                  disabled:opacity-50
                 "
               >
-                Continue
-              </Link>
+                {loading ? "Please Wait..." : "Continue"}
+              </button>
             </form>
           </div>
         </div>

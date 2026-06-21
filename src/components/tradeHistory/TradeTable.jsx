@@ -1,7 +1,9 @@
 import { MoreVertical } from "lucide-react";
 import { tradeData } from "../../data/tradeData";
+import { useNavigate } from "react-router-dom";
 
 const TradesTable = () => {
+  const navigate = useNavigate();
   return (
     <div
       className="
@@ -119,8 +121,13 @@ const TradesTable = () => {
                 </td>
 
                 <td className="p-4 text-center">
-                  <button>
+                  {/* <button>
                     <MoreVertical size={18} />
+                  </button> */}
+                  <button
+                    onClick={() => navigate(`/trade-history/${trade._id}`)}
+                  >
+                    <Eye size={18} />
                   </button>
                 </td>
               </tr>

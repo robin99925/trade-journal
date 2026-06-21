@@ -1,0 +1,6 @@
+import { getApi } from "../utils/apiMethods";
+let url = "http://localhost:5000/api/v1";
+
+export const getDashboardData = async () => {
+  return await getApi(`${url}/dashboard`);
+};

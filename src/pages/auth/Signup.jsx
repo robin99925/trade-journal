@@ -1,5 +1,6 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
+import Swal from "sweetalert2";
 import {
   HiOutlineUser,
   HiOutlineMail,
@@ -8,9 +9,94 @@ import {
   HiOutlineEyeOff,
 } from "react-icons/hi";
 
+import { registerUser } from "../../services/authService";
+
 export default function Signup() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const navigate = useNavigate();
+
+  const [loading, setLoading] = useState(false);
+
+  const [formData, setFormData] = useState({
+    fullName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (
+      !formData.fullName ||
+      !formData.email ||
+      !formData.password ||
+      !formData.confirmPassword
+    ) {
+      return Swal.fire({
+        icon: "warning",
+        title: "All fields are required",
+      });
+    }
+
+    if (formData.password !== formData.confirmPassword) {
+      return Swal.fire({
+        icon: "error",
+        title: "Passwords do not match",
+      });
+    }
+
+    try {
+      setLoading(true);
+
+      const payload = {
+        fullName: formData.fullName,
+        email: formData.email,
+        password: formData.password,
+      };
+
+      const response = await registerUser(payload);
+      console.log(response);
+
+      Swal.fire({
+        icon: "success",
+        title: response.message || "Account created successfully",
+      });
+
+      setFormData({
+        fullName: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+      });
+      navigate("/");
+    } catch (error) {
+      const errorData = error?.response?.data;
+
+      let errorMessage = "Something went wrong";
+
+      if (errorData?.errors?.length > 0) {
+        errorMessage = errorData.errors[0].msg;
+      } else if (errorData?.message) {
+        errorMessage = errorData.message;
+      }
+
+      Swal.fire({
+        icon: "error",
+        title: errorMessage,
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-slate-950 text-white overflow-hidden">
@@ -98,11 +184,14 @@ export default function Signup() {
               Join thousands of traders improving every day.
             </p>
 
-            <form className="mt-8 space-y-5">
+            <form className="mt-8 space-y-5" onSubmit={handleSubmit}>
               <Input
                 label="Full Name"
                 placeholder="Enter your full name"
                 icon={<HiOutlineUser />}
+                name="fullName"
+                value={formData.fullName}
+                onChange={handleChange}
               />
 
               <Input
@@ -110,6 +199,9 @@ export default function Signup() {
                 placeholder="Enter your email"
                 icon={<HiOutlineMail />}
                 type="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
               />
 
               <PasswordInput
@@ -118,6 +210,9 @@ export default function Signup() {
                 icon={<HiOutlineLockClosed />}
                 show={showPassword}
                 toggle={() => setShowPassword(!showPassword)}
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
               />
 
               <PasswordInput
@@ -126,10 +221,14 @@ export default function Signup() {
                 icon={<HiOutlineLockClosed />}
                 show={showConfirmPassword}
                 toggle={() => setShowConfirmPassword(!showConfirmPassword)}
+                name="confirmPassword"
+                value={formData.confirmPassword}
+                onChange={handleChange}
               />
 
               <button
                 type="submit"
+                disabled={loading}
                 className="
                   w-full
                   py-4
@@ -141,9 +240,10 @@ export default function Signup() {
                   text-lg
                   transition-all
                   hover:scale-[1.02]
+                  disabled:opacity-50
                 "
               >
-                Create Account
+                {loading ? "Creating Account..." : "Create Account"}
               </button>
             </form>
 
@@ -160,7 +260,15 @@ export default function Signup() {
   );
 }
 
-function Input({ label, placeholder, icon, type = "text" }) {
+function Input({
+  label,
+  placeholder,
+  icon,
+  type = "text",
+  name,
+  value,
+  onChange,
+}) {
   return (
     <div>
       <label className="block mb-2 text-sm text-slate-300">{label}</label>
@@ -183,6 +291,9 @@ function Input({ label, placeholder, icon, type = "text" }) {
 
         <input
           type={type}
+          name={name}
+          value={value}
+          onChange={onChange}
           placeholder={placeholder}
           className="
             flex-1
@@ -197,7 +308,16 @@ function Input({ label, placeholder, icon, type = "text" }) {
   );
 }
 
-function PasswordInput({ label, placeholder, icon, show, toggle }) {
+function PasswordInput({
+  label,
+  placeholder,
+  icon,
+  show,
+  toggle,
+  name,
+  value,
+  onChange,
+}) {
   return (
     <div>
       <label className="block mb-2 text-sm text-slate-300">{label}</label>
@@ -220,6 +340,9 @@ function PasswordInput({ label, placeholder, icon, show, toggle }) {
 
         <input
           type={show ? "text" : "password"}
+          name={name}
+          value={value}
+          onChange={onChange}
           placeholder={placeholder}
           className="
             flex-1

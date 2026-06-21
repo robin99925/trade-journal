@@ -1,5 +1,8 @@
 const CalendarDay = ({ day, pnl, trades, selected = false, today = false }) => {
-  const hasTrades = pnl !== null && pnl !== undefined;
+  const hasTrades = Number(trades) > 0;
+
+  const isProfit = Number(pnl) > 0;
+  const isLoss = Number(pnl) < 0;
 
   return (
     <div
@@ -20,14 +23,12 @@ const CalendarDay = ({ day, pnl, trades, selected = false, today = false }) => {
         ${selected ? "border-2 border-violet-500" : ""}
       `}
     >
-      {/* Date */}
       <div className="flex items-center justify-between">
         <span
           className={`
             text-[10px]
             md:text-xs
             font-semibold
-
             ${
               today
                 ? "h-5 w-5 md:h-6 md:w-6 rounded-full bg-violet-600 text-white flex items-center justify-center"
@@ -56,15 +57,21 @@ const CalendarDay = ({ day, pnl, trades, selected = false, today = false }) => {
               lg:text-sm
               font-semibold
               truncate
-
-              ${pnl > 0 ? "text-green-600" : "text-red-500"}
+              ${
+                isProfit
+                  ? "text-green-600"
+                  : isLoss
+                    ? "text-red-500"
+                    : "text-slate-600"
+              }
             `}
           >
-            {pnl > 0 ? "+" : "-"}₹{Math.abs(pnl).toLocaleString()}
+            {isProfit ? "+" : isLoss ? "-" : ""}₹
+            {Math.abs(Number(pnl || 0)).toLocaleString("en-IN")}
           </p>
 
           <p className="text-[9px] md:text-[10px] text-slate-500 truncate">
-            {trades} trades
+            {trades} {Number(trades) === 1 ? "trade" : "trades"}
           </p>
         </div>
       )}
