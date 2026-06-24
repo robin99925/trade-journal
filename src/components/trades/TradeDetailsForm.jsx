@@ -2,6 +2,7 @@ import { CalendarDays, Clock3, TrendingDown, TrendingUp } from "lucide-react";
 
 const symbols = [
   { symbol: "NIFTY 50", lotSize: 65 },
+  { symbol: "SENSEX", lotSize: 20 },
   { symbol: "BANKNIFTY", lotSize: 30 },
   { symbol: "FINNIFTY", lotSize: 65 },
   { symbol: "MIDCPNIFTY", lotSize: 120 },
